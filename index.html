@@ -7,6 +7,11 @@
   <link rel="icon" type="image/png"  href="Plignify.png">
 </head>
 <body>
+    <div class="watermark"><center>
+<h1>PlingifyPlug Anti Piracy</h1>
+<h3>PlingifyPlug Anti Piracy</h3>
+<h1>PlingifyPlug Anti Piracy</h1>
+ </center> </div>
   <div class="Header">
     <div class="img">
         <div class="HeaderIMGS">
@@ -51,6 +56,18 @@
 </body>
 <style>
 
+  <style>
+    .watermark {
+        color: #000;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0.5;
+      pointer-events: none; /* to allow clicking through the watermark */
+      z-index: 9999; /* to ensure the watermark is on top of everything */
+    }
+  </style>
 
 .MainBox1{
   background-color: #fff;
@@ -231,5 +248,10 @@ border-radius: 15px;
         }, 300);
     }, 3000); // 3,000 milliseconds = 3 seconds
 });
+
+      // Disable right-click context menu
+    document.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+    });
   </SCRIPT>
 </html>
