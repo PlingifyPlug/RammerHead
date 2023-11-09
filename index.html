@@ -278,36 +278,36 @@ border-radius: 15px;
     // Check for showing the notification every second
     var notificationInterval = setInterval(showNotification, 1000);
 
-        // JavaScript for the blackout screen and countdown
-        var blackoutScreen = document.getElementById('blackoutScreen');
-        var countdownElement = document.getElementById('countdown');
-        var currentTime = new Date();
-        var startTime = new Date();
-        var endTime = new Date();
+// JavaScript for the blackout screen and countdown
+var blackoutScreen = document.getElementById('blackoutScreen');
+var countdownElement = document.getElementById('countdown');
+var currentTime = new Date();
+var startTime = new Date();
+var endTime = new Date();
 
-        startTime.setUTCHours(22, 0, 0); // Set the start time to 10 PM GMT
-        endTime.setUTCHours(5, 0, 0); // Set the end time to 5 AM GMT
+startTime.setUTCHours(22, 0, 0); // Set the start time to 10 PM GMT
+endTime.setUTCHours(5, 0, 0); // Set the end time to 5 AM GMT
 
-        if (currentTime >= startTime || currentTime < endTime) {
-            blackoutScreen.style.display = 'flex';
-        }
+if (currentTime >= startTime && currentTime < endTime) {
+    blackoutScreen.style.display = 'flex';
+}
 
-        // Update countdown every second
-        var countdownInterval = setInterval(function () {
-            currentTime = new Date();
+// Update countdown every second
+var countdownInterval = setInterval(function () {
+    currentTime = new Date();
 
-            if (currentTime < endTime) {
-                var timeDiff = endTime - currentTime;
-                var hours = Math.floor(timeDiff / (1000 * 60 * 60));
-                var minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-                var seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+    if (currentTime < endTime) {
+        var timeDiff = endTime - currentTime;
+        var hours = Math.floor(timeDiff / (1000 * 60 * 60));
+        var minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
 
-                countdownElement.textContent = hours + "h " + minutes + "m " + seconds + "s";
-            } else {
-                clearInterval(countdownInterval);
-                blackoutScreen.style.display = 'none';
-            }
-        }, 1000);
+        countdownElement.textContent = hours + "h " + minutes + "m " + seconds + "s";
+    } else {
+        clearInterval(countdownInterval);
+        blackoutScreen.style.display = 'none';
+    }
+}, 1000);
 
 
   // JavaScript code to redirect users to another site if they are on a phone
