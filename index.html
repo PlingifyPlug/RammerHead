@@ -24,13 +24,21 @@
 
 
 
+
 <div id="blackoutScreen" class="blackout">
-    <div>
-        <h2>Server downtime.</h2>
-        <p>Please check the <a href="https://plingifyplug.github.io/Status/">status page</a> to see the uptime.</p>
-        <p>Countdown Timer: <span id="countdown"></span></p>
-    </div>
+  <video autoplay loop muted class="video-background">
+      <source src="BlackoutVideoBackground.mp4" type="video/mp4">
+      <!-- Include additional source elements for other video formats if needed -->
+  </video>
+  <div>
+      <h2>Server downtime.</h2>
+      <p>Please check the <a href="https://plingifyplug.github.io/Status/">status page</a> to see the uptime.</p>
+      <p>Countdown Timer: <span id="countdown"></span></p>
+  </div>
 </div>
+
+
+
 
 <div class="HeaderText">
     <h2>PlingifyPlug-RammerHead-Browser-Online</h2>
@@ -76,21 +84,24 @@
 </body>
 <style>
 
-    /* CSS for the blackout screen */
-    .blackout {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: black;
-    color: white;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    z-index: 9999;
-}
+.blackout {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+        }
+
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
 
 
@@ -278,37 +289,6 @@ border-radius: 15px;
     // Check for showing the notification every second
     var notificationInterval = setInterval(showNotification, 1000);
 
-// JavaScript for the blackout screen and countdown
-var blackoutScreen = document.getElementById('blackoutScreen');
-var countdownElement = document.getElementById('countdown');
-var currentTime = new Date();
-var startTime = new Date();
-var endTime = new Date();
-
-startTime.setUTCHours(22, 0, 0); // Set the start time to 10 PM GMT
-endTime.setUTCHours(5, 0, 0); // Set the end time to 5 AM GMT
-
-if (currentTime >= startTime && currentTime < endTime) {
-    blackoutScreen.style.display = 'flex';
-}
-
-// Update countdown every second
-var countdownInterval = setInterval(function () {
-    currentTime = new Date();
-
-    if (currentTime < endTime) {
-        var timeDiff = endTime - currentTime;
-        var hours = Math.floor(timeDiff / (1000 * 60 * 60));
-        var minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-        var seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
-
-        countdownElement.textContent = hours + "h " + minutes + "m " + seconds + "s";
-    } else {
-        clearInterval(countdownInterval);
-        blackoutScreen.style.display = 'none';
-    }
-}, 1000);
-
 
   // JavaScript code to redirect users to another site if they are on a phone
   var isMobile = /iPhone|iPad|iPod|Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
@@ -400,4 +380,45 @@ var countdownInterval = setInterval(function () {
       e.preventDefault();
     });
   </SCRIPT>
+
+<script>
+        var blackoutScreen = document.getElementById('blackoutScreen');
+        var countdownElement = document.getElementById('countdown');
+        var currentTime = new Date();
+        var startTime = new Date();
+        var endTime = new Date();
+
+        startTime.setUTCHours(22, 0, 0); // Set the start time to 10 PM GMT
+        endTime.setUTCHours(5, 0, 0); // Set the end time to 5 AM GMT
+
+        function updateBlackout() {
+            currentTime = new Date();
+
+            if (currentTime.getTime() >= startTime.getTime() || currentTime.getTime() < endTime.getTime()) {
+                blackoutScreen.style.display = 'flex';
+                updateCountdown();
+            } else {
+                blackoutScreen.style.display = 'none';
+            }
+        }
+
+        function updateCountdown() {
+            currentTime = new Date();
+
+            if (currentTime.getTime() < endTime.getTime()) {
+                var timeDiff = endTime.getTime() - currentTime.getTime();
+                var hours = Math.floor(timeDiff / (1000 * 60 * 60));
+                var minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+
+                countdownElement.textContent = hours.toString().padStart(2, '0') + "h " +
+                    minutes.toString().padStart(2, '0') + "m " +
+                    seconds.toString().padStart(2, '0') + "s";
+
+                setTimeout(updateCountdown, 1000);
+            }
+        }
+
+        updateBlackout();
+</script>
 </html>
