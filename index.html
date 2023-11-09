@@ -1,6 +1,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,6 +17,12 @@
       <img src="Plignify.png" alt="Report to staff.">
         </div>
     </div>
+
+<div id="notification">Preparing Server Downtime: 22:00-GMT</div>
+
+<div id="customNotification" class="custom-notification-box">Server Downtime Started</div>
+
+
 
     <div id="blackoutScreen" class="blackout">
         <div>
@@ -190,9 +197,85 @@ border-radius: 15px;
 .popup-box p {
     margin: 0;
 }
+
+
+#notification {
+        display: none;
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        padding: 20px;
+        background-color: #ff0000;
+        color: #ffffff;
+        z-index: 9999;
+        border-radius: 15px;
+    }
+
+    .custom-notification-box {
+        display: none;
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        padding: 20px;
+        background-color: #ff0000;
+        color: #ffffff;
+        z-index: 9999;
+        border-radius: 15px;
+        }
+
 </style>
 
+
+
 <script>
+
+
+        // JavaScript for the custom notification box
+        var customNotification = document.getElementById('customNotification');
+        var currentTime = new Date();
+        var showNotificationTime = new Date();
+        var hideNotificationTime = new Date();
+
+        showNotificationTime.setUTCHours(22, 0, 0); // Set the time to 10:00 PM GMT
+        hideNotificationTime.setTime(showNotificationTime.getTime() + 30000); // Hide the notification after 30 seconds
+
+        function showCustomNotification() {
+            currentTime = new Date();
+
+            if (currentTime.getTime() >= showNotificationTime.getTime() && currentTime.getTime() < hideNotificationTime.getTime()) {
+                customNotification.style.display = 'block';
+                setTimeout(function () {
+                    customNotification.style.display = 'none';
+                }, 30000); // Hide the notification after 30 seconds
+            }
+        }
+
+        // Check for showing the notification every second
+        var customNotificationInterval = setInterval(showCustomNotification, 1000);
+
+
+    // JavaScript for the notification box
+    var notification = document.getElementById('notification');
+    var currentTime = new Date();
+    var prepareDowntimeTime = new Date();
+    var hideNotificationTime = new Date();
+
+    prepareDowntimeTime.setUTCHours(21, 55, 0); // Set the time to 9:55 PM GMT
+    hideNotificationTime.setUTCHours(22, 0, 0); // Set the time to 10:00 PM and 15 seconds GMT
+
+    function showNotification() {
+        currentTime = new Date();
+
+        if (currentTime >= prepareDowntimeTime && currentTime < hideNotificationTime) {
+            notification.style.display = 'block';
+            setTimeout(function () {
+                notification.style.display = 'none';
+            }, 15000); // Hide the notification after 15 seconds
+        }
+    }
+
+    // Check for showing the notification every second
+    var notificationInterval = setInterval(showNotification, 1000);
 
     // JavaScript for the blackout screen and countdown
     var blackoutScreen = document.getElementById('blackoutScreen');
