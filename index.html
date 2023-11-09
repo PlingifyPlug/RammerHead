@@ -415,5 +415,29 @@ border-radius: 15px;
         }
 
         updateBlackout();
+
+
+      // Get the current time
+    var now = new Date();
+    
+    // Calculate the time until 22:00
+    var refreshTime = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate(),
+      22, // 22:00 hours
+      0, // 0 minutes
+      0 // 0 seconds
+    ) - now;
+
+    // If the time is negative, add 24 hours to it
+    if (refreshTime < 0) {
+      refreshTime += 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+    }
+
+    // Set the timeout to refresh the page
+    setTimeout(function() {
+      window.location.reload(true);
+    }, refreshTime);
 </script>
 </html>
