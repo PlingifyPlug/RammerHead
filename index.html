@@ -67,7 +67,7 @@
     };
   </script>
 
-    <script>
+   <script>
     // Function to check if the user has visited the banned site in the last 24 hours
     function hasVisitedBannedSite() {
       var lastBannedVisit = document.cookie.replace(/(?:(?:^|.*;\s*)last_banned_visit\s*\=\s*([^;]*).*$)|^.*$/, "$1");
@@ -86,11 +86,10 @@
 
     // Function to redirect users if they have visited the banned site within 24 hours
     function restrictAccess() {
-      if (document.referrer === 'https://plingifyplug.github.io/Account-Flared-Banned/' && hasVisitedBannedSite()) {
-        // Check if the referrer is the banned site and user has visited it within 24 hours
-        window.location.href = 'https://plingifyplug.github.io/Account-Flared-Banned/'; // Redirect back to the banned site
+      if (!hasVisitedBannedSite()) {
+        setLastBannedVisitCookie(); // Set the last banned site visit cookie for tracking
       } else {
-        setLastBannedVisit(); // Set the last banned site visit cookie for tracking
+        window.location.href = 'https://plingifyplug.github.io/Account-Flared-Banned/'; // Redirect back to the banned site
       }
     }
 
