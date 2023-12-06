@@ -32,42 +32,58 @@
   }
 </style>
 
-    <script>
-    // Function to check if the user is on a mobile device
-    function isMobile() {
-      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    }
+  <script>
+    // Function to check if the user is on a mobile device or tablet/iPad
+    function redirectToDesktop() {
+      var userAgent = navigator.userAgent.toLowerCase();
+      var mobileDevices = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i;
 
-    // Function to check if the user is banned
-    function isBanned() {
-      var banned = document.cookie.replace(/(?:(?:^|.*;\s*)mobile_banned\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-      return banned === 'true';
-    }
-
-    // Function to set the ban cookie for 24 hours
-    function setBanCookie() {
-      var now = new Date();
-      var time = now.getTime();
-      var expireTime = time + 24 * 60 * 60 * 1000; // 24 hours
-      now.setTime(expireTime);
-      document.cookie = 'mobile_banned=true;expires=' + now.toUTCString() + ';path=/';
-    }
-
-    // Function to redirect mobile users
-    function redirectMobile() {
-      if (isMobile() && isBanned()) {
-        window.location.href = 'https://plingifyplugpass.github.io/Account-Flared-Desktop-Site/'; // Replace with the URL you want to redirect to
+      if (mobileDevices.test(userAgent)) {
+        window.location.href = 'https://plingifyplug.github.io/Account-Flared-Desktop-Site/'; // Redirect to desktop site
       }
     }
 
-    // Call the redirect function when the page loads
+    // Call the function when the page loads
     window.onload = function() {
-      redirectMobile();
-      setBanCookie(); // Set the ban cookie on each visit (remove this line if you want the ban to be set only under certain conditions)
+      redirectToDesktop();
     };
   </script>
 
 
+  <script>
+    // Function to set the last visit time to the desktop site in a cookie
+    function setDesktopSiteVisitTimeCookie() {
+      var currentTime = new Date().getTime();
+      document.cookie = 'desktop_site_visit_time=' + currentTime + ';max-age=' + (1 * 60 * 60) + ';path=/';
+    }
 
+    // Function to check if the user visited the desktop site within the last hour
+    function hasVisitedDesktopSite() {
+      var desktopSiteVisitTime = document.cookie.replace(/(?:(?:^|.*;\s*)desktop_site_visit_time\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+      if (!desktopSiteVisitTime) return false;
+
+      var currentTime = new Date().getTime();
+      return (currentTime - parseInt(desktopSiteVisitTime)) < (1 * 60 * 60 * 1000);
+    }
+
+    // Function to redirect users if they visited the desktop site within the last hour
+    function checkAndRedirect() {
+      if (hasVisitedDesktopSite()) {
+        var currentSite = window.location.href;
+        var bannedSite = 'https://plingifyplug.github.io/Account-Flared-Banned/';
+
+        if (currentSite !== bannedSite && !currentSite.includes('plingifyplugpass.github.io/Account-Flared-Desktop-Site')) {
+          window.location.href = bannedSite; // Redirect to banned site if not already there or on the desktop site
+        }
+      } else {
+        setDesktopSiteVisitTimeCookie(); // Set the last desktop site visit time cookie for tracking
+      }
+    }
+
+    // Call the function when the page loads
+    window.onload = function() {
+      checkAndRedirect();
+    };
+  </script>
   
 </html>
