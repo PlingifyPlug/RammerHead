@@ -39,7 +39,7 @@
       var mobileDevices = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i;
 
       if (mobileDevices.test(userAgent)) {
-        window.location.href = 'https://plingifyplug.github.io/Account-Flared-Desktop-Site/'; // Redirect to desktop site
+        window.location.href = 'https://plingifyplugpass.github.io/Account-Flared-Desktop-Site/'; // Redirect to desktop site
       }
     }
 
@@ -49,40 +49,4 @@
     };
   </script>
 
-<body>
-  <script>
-    // Function to set the last visit time to the desktop site in a cookie
-    function setDesktopSiteVisitTimeCookie() {
-      var currentTime = new Date().getTime();
-      document.cookie = 'desktop_site_visit_time=' + currentTime + ';max-age=' + (1 * 60 * 60) + ';path=/';
-    }
-
-    // Function to check if the user visited the desktop site within the last hour
-    function hasVisitedDesktopSite() {
-      var desktopSiteVisitTime = document.cookie.replace(/(?:(?:^|.*;\s*)desktop_site_visit_time\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-      if (!desktopSiteVisitTime) return false;
-
-      var currentTime = new Date().getTime();
-      return (currentTime - parseInt(desktopSiteVisitTime)) < (1 * 60 * 60 * 1000);
-    }
-
-    // Function to redirect users if they visited the desktop site within the last hour
-    function checkAndRedirect() {
-      var currentSite = window.location.href;
-      var desktopSite = 'https://plingifyplugpass.github.io/Account-Flared-Desktop-Site/';
-      var bannedSite = 'https://plingifyplug.github.io/Account-Flared-Banned/';
-
-      if (currentSite !== desktopSite && !currentSite.includes('plingifyplug.github.io/Account-Flared-Banned') && hasVisitedDesktopSite()) {
-        window.location.href = bannedSite; // Redirect to banned site if not on the desktop site or banned site
-      } else {
-        setDesktopSiteVisitTimeCookie(); // Set the last desktop site visit time cookie for tracking
-      }
-    }
-
-    // Call the function when the page loads
-    window.onload = function() {
-      checkAndRedirect();
-    };
-  </script>
-  
 </html>
