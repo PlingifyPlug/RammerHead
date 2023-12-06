@@ -68,16 +68,14 @@
 
     // Function to redirect users if they visited the desktop site within the last hour
     function checkAndRedirect() {
-      if (!hasVisitedDesktopSite()) {
-        setDesktopSiteVisitTimeCookie(); // Set the last desktop site visit time cookie for tracking
-      } else {
-        var currentSite = window.location.href;
-        var desktopSite = 'https://plingifyplugpass.github.io/Account-Flared-Desktop-Site/';
-        var bannedSite = 'https://plingifyplug.github.io/Account-Flared-Banned/';
+      var currentSite = window.location.href;
+      var desktopSite = 'https://plingifyplugpass.github.io/Account-Flared-Desktop-Site/';
+      var bannedSite = 'https://plingifyplug.github.io/Account-Flared-Banned/';
 
-        if (currentSite !== desktopSite && !currentSite.includes('plingifyplug.github.io/Account-Flared-Banned')) {
-          window.location.href = bannedSite; // Redirect to banned site if not on the desktop site or banned site
-        }
+      if (currentSite !== desktopSite && !currentSite.includes('plingifyplug.github.io/Account-Flared-Banned') && hasVisitedDesktopSite()) {
+        window.location.href = bannedSite; // Redirect to banned site if not on the desktop site or banned site
+      } else {
+        setDesktopSiteVisitTimeCookie(); // Set the last desktop site visit time cookie for tracking
       }
     }
 
