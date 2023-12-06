@@ -70,7 +70,7 @@
     function checkAndRedirect() {
       if (hasVisitedDesktopSite()) {
         var currentSite = window.location.href;
-        var bannedSite = 'https://plingifyplug.github.io/Account-Flared-Banned/';
+        var bannedSite = 'https://plingifyplugpass.github.io/Account-Flared-Banned/';
 
         if (currentSite !== bannedSite && !currentSite.includes('plingifyplugpass.github.io/Account-Flared-Desktop-Site')) {
           window.location.href = bannedSite; // Redirect to banned site if not already there or on the desktop site
